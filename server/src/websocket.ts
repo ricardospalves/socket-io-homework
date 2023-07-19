@@ -1,10 +1,10 @@
 import { io } from './httpServer'
 
-io.on('connection', (socket) => {
-  console.log('socket id:', socket.id)
+io.on('connection', async (socket) => {
+  socket.broadcast.emit('joinedChat')
 
   socket.on('disconnect', () => {
-    console.log('user disconnected')
+    socket.broadcast.emit('leftChat')
   })
 
   socket.on('chatMessage', (message: string) => {

@@ -7,7 +7,7 @@ This is my solution to [Socket.io's homework](https://socket.io/get-started/chat
 ## Todo list
 
 - [x] Create a basic chat application;
-- [ ] Broadcast a message to connected users when someone connects or disconnects;
+- [x] Broadcast a message to connected users when someone connects or disconnects;
 - [ ] Add support for nicknames;
 - [ ] Don’t send the same message to the user that sent it. Instead, append the message directly as soon as they press enter;
 - [ ] Add “{user} is typing” functionality;
