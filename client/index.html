@@ -1,20 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Socket.io Homework</title>
-</head>
-<body>
-  <h1>Socket.io Homework</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socket.io Homework</title>
+  </head>
+  <body>
+    <h1>Socket.io Homework</h1>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    (() => {
-      'use strict'
+    <ul id="messages"></ul>
 
-      const socket = io()
-    })()
-  </script>
-</body>
+    <form id="messageForm">
+      <label for="messageField">Message</label>
+      <textarea id="messageField" required></textarea>
+      <button>Send</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      (() => {
+        "use strict";
+
+        const socket = io();
+
+        const messagesElement = document.querySelector("#messages");
+        const messageFormElement = document.querySelector("#messageForm");
+        const messageFieldElement =
+          messageFormElement.querySelector("#messageField");
+
+        messageFormElement.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const message = messageFieldElement.value;
+
+          if (!message) {
+            messageFieldElement.focus();
+            return;
+          }
+
+          socket.emit("chatMessage", message);
+          messageFieldElement.value = "";
+          messageFieldElement.focus();
+        });
+
+        socket.on("chatMessage", (message) => {
+          const itemElement = document.createElement("li");
+
+          itemElement.textContent = message;
+          messagesElement.appendChild(itemElement);
+          // window.scrollTo(0, document.body.scrollHeight);
+        });
+      })();
+    </script>
+  </body>
 </html>
