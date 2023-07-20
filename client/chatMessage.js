@@ -1,10 +1,10 @@
 (function () {
   "use strict";
 
-  socket.on("chatMessage", (message) => {
+  socket.on("chatMessage", ({ message, username }) => {
     const messageElement = window.createMessageElement();
 
-    messageElement.textContent = message;
+    messageElement.innerHTML = `<b>${username}:</b> ${message}`;
 
     appendMessageToChat(messageElement);
   });

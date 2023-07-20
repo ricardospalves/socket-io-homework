@@ -8,20 +8,10 @@
   <body>
     <h1>Socket.io Homework</h1>
 
-    <ul id="chatMessages"></ul>
-
-    <form id="messageForm">
-      <label for="messageField">Message</label>
-      <textarea id="messageField" required></textarea>
-      <button>Send</button>
+    <form action="chat.html">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username">
+      <button>Join</button>
     </form>
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="websocket.js"></script>
-    <script src="createMessageElement.js"></script>
-    <script src="appendMessageToChat.js"></script>
-    <script src="sendMessage.js"></script>
-    <script src="chatMessage.js"></script>
-    <script src="broadcastMessage.js"></script>
   </body>
 </html>

@@ -1,5 +1,10 @@
 import { io } from './httpServer'
 
+type ChatMessageArguments = {
+  username: string
+  message: string
+}
+
 io.on('connection', async (socket) => {
   socket.broadcast.emit('joinedChat')
 
@@ -7,7 +12,7 @@ io.on('connection', async (socket) => {
     socket.broadcast.emit('leftChat')
   })
 
-  socket.on('chatMessage', (message: string) => {
-    io.emit('chatMessage', message)
+  socket.on('chatMessage', ({ message, username }: ChatMessageArguments) => {
+    io.emit('chatMessage', { message, username })
   })
 })
