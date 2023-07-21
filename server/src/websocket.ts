@@ -24,7 +24,7 @@ io.on('connection', async (socket) => {
   })
 
   socket.on('chatMessage', ({ message, username }: ChatMessageArguments) => {
-    io.emit('chatMessage', { message, username })
+    socket.broadcast.emit('chatMessage', { message, username })
   })
 
   socket.on('typing', ({ typing, username }: TypingArguments) => {

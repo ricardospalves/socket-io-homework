@@ -15,6 +15,12 @@
       return;
     }
 
+    const messageElement = window.createMessageElement();
+
+    messageElement.innerHTML = `<b>You:</b> ${message}`;
+
+    window.appendMessageToChat(messageElement);
+
     window.socket.emit("chatMessage", {
       message,
       username,
