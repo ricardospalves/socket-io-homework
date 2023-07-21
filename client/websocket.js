@@ -9,5 +9,7 @@
 
   const socket = io();
 
+  socket.emit("joinedChat", { username });
+
   window.socket = socket;
 })();

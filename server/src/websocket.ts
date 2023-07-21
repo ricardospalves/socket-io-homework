@@ -1,5 +1,9 @@
 import { io } from './httpServer'
 
+type JoinedChatArguments = {
+  username: string
+}
+
 type ChatMessageArguments = {
   username: string
   message: string
@@ -11,10 +15,12 @@ type TypingArguments = {
 }
 
 io.on('connection', async (socket) => {
-  socket.broadcast.emit('joinedChat')
+  socket.on('joinedChat', ({ username }: JoinedChatArguments) => {
+    socket.broadcast.emit('joinedChat', { username })
 
-  socket.on('disconnect', () => {
-    socket.broadcast.emit('leftChat')
+    socket.on('disconnect', () => {
+      socket.broadcast.emit('leftChat', { username })
+    })
   })
 
   socket.on('chatMessage', ({ message, username }: ChatMessageArguments) => {

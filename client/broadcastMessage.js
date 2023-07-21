@@ -10,16 +10,20 @@
     return messageElement;
   };
 
-  socket.on("joinedChat", () => {
-    const messageElement = createBroadcastMessage("Someone joined the chat");
+  socket.on("joinedChat", ({ username }) => {
+    const messageElement = createBroadcastMessage(
+      `<b>${username}</b> joined the chat`
+    );
 
     messageElement.style.color = "green";
 
     window.appendMessageToChat(messageElement);
   });
 
-  socket.on("leftChat", () => {
-    const messageElement = createBroadcastMessage("Someone left the chat");
+  socket.on("leftChat", ({ username }) => {
+    const messageElement = createBroadcastMessage(
+      `<b>${username}</b> left the chat`
+    );
 
     messageElement.style.color = "red";
 
