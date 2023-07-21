@@ -5,6 +5,11 @@ type ChatMessageArguments = {
   message: string
 }
 
+type TypingArguments = {
+  username: string
+  typing: boolean
+}
+
 io.on('connection', async (socket) => {
   socket.broadcast.emit('joinedChat')
 
@@ -14,5 +19,9 @@ io.on('connection', async (socket) => {
 
   socket.on('chatMessage', ({ message, username }: ChatMessageArguments) => {
     io.emit('chatMessage', { message, username })
+  })
+
+  socket.on('typing', ({ typing, username }: TypingArguments) => {
+    socket.broadcast.emit('typing', { typing, username })
   })
 })
