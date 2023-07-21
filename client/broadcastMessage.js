@@ -10,7 +10,7 @@
     return messageElement;
   };
 
-  socket.on("joinedChat", ({ username }) => {
+  window.socket.on("joinedChat", ({ username }) => {
     const messageElement = createBroadcastMessage(
       `<b>${username}</b> joined the chat`
     );
@@ -20,7 +20,7 @@
     window.appendMessageToChat(messageElement);
   });
 
-  socket.on("leftChat", ({ username }) => {
+  window.socket.on("leftChat", ({ username }) => {
     const messageElement = createBroadcastMessage(
       `<b>${username}</b> left the chat`
     );
