@@ -14,12 +14,26 @@ type TypingArguments = {
   typing: boolean
 }
 
+const onlineUsers = new Map<string, { username: string; socketID: string }>()
+
 io.on('connection', async (socket) => {
-  socket.on('joinedChat', ({ username }: JoinedChatArguments) => {
+  socket.on('joinedChat', async ({ username }: JoinedChatArguments) => {
+    const socketID = socket.id
+
     socket.broadcast.emit('joinedChat', { username })
+
+    onlineUsers.set(socketID, {
+      socketID,
+      username,
+    })
+
+    io.emit('addUserOnline', [...onlineUsers.values()])
 
     socket.on('disconnect', () => {
       socket.broadcast.emit('leftChat', { username })
+
+      onlineUsers.delete(socketID)
+      io.emit('removeUserOnline', [...onlineUsers.values()])
     })
   })
 
