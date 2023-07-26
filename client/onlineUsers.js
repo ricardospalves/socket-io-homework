@@ -2,6 +2,7 @@
   "use strict";
 
   const onlineUsersElement = window.document.querySelector("#onlineUsers");
+  const USERNAME = window.getUsername();
 
   window.socket.on("addUserOnline", setOnlineUsers);
 
@@ -14,7 +15,9 @@
     });
     const fixedUsernamesPosition = moveArrayItem(users, currentUsernameIndex);
     const usernames = fixedUsernamesPosition.map(({ username, socketID }) => {
-      return socketID === clientSocketID ? "<b>You</b>" : username;
+      return socketID === clientSocketID
+        ? "<b>You</b>"
+        : `<a href="/private-chat.html?from=${USERNAME}&to=${username}">${username}</a>`;
     });
     onlineUsersElement.innerHTML = `🟢 Online users: ${usernames.join(", ")}`;
   }

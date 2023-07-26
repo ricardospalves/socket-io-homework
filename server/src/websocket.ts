@@ -14,6 +14,12 @@ type TypingArguments = {
   typing: boolean
 }
 
+type PrivateMessageArguments = {
+  message: string
+  from: string
+  to: string
+}
+
 const onlineUsers = new Map<string, { username: string; socketID: string }>()
 
 io.on('connection', async (socket) => {
@@ -43,5 +49,13 @@ io.on('connection', async (socket) => {
 
   socket.on('typing', ({ typing, username }: TypingArguments) => {
     socket.broadcast.emit('typing', { typing, username })
+  })
+
+  socket.on('privateMessage', ({ from, message }: PrivateMessageArguments) => {
+    console.log('[server]')
+    socket.broadcast.emit('privateMessage', {
+      message,
+      from,
+    })
   })
 })

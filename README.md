@@ -1,7 +1,5 @@
 # Socket.io Homework
 
-🚧 Work in progress 🚧.
-
 This is my solution to [Socket.io's homework](https://socket.io/get-started/chat#homework).
 
 ## Todo list
@@ -12,7 +10,7 @@ This is my solution to [Socket.io's homework](https://socket.io/get-started/chat
 - [x] Don’t send the same message to the user that sent it. Instead, append the message directly as soon as they press enter;
 - [x] Add “{user} is typing” functionality;
 - [x] Show who’s online;
-- [ ] Add private messaging.
+- [x] Add private messaging.
 
 ## LICENSE
 

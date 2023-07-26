@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socket.io Homework</title>
+  </head>
+  <body>
+    <h1>Socket.io Homework</h1>
+
+    <ul id="chatMessages"></ul>
+
+    <form id="messageForm">
+      <label for="messageField">Message</label>
+      <textarea id="messageField" required></textarea>
+      <button>Send</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        const CURRENT_URL = new URL(window.location.href);
+        const FROM = CURRENT_URL.searchParams.get("from");
+        const TO = CURRENT_URL.searchParams.get("to");
+
+        if (!(FROM && TO)) {
+          return (window.location.href = "/");
+        }
+
+        const messageFormElement = document.querySelector('#messageForm')
+        const messageFieldElement = messageFormElement.querySelector('#messageField')
+        const chatMessagesElement = document.querySelector('#chatMessages')
+
+        const socket = io();
+
+        messageFormElement.addEventListener('submit', (event) => {
+          event.preventDefault()
+
+          const message = messageFieldElement.value
+
+          if(!message) {
+            messageFieldElement.focus()
+
+            return
+          }
+
+          socket.emit('privateMessage', {
+            message: message,
+            from: FROM,
+            to: TO
+          })
+
+          const messageElement = createMessageElement({username: '<b>You</b>:', message})
+
+          appendMessageToChat(messageElement)
+          messageFieldElement.value = ''
+          messageFieldElement.focus()
+        })
+
+        socket.on('privateMessage', ({message}) => {
+          const messageElement = createMessageElement({username: `${FROM}:`, message})
+
+          appendMessageToChat(messageElement)
+        })
+
+        function appendMessageToChat(messageElement) {
+          chatMessagesElement.appendChild(messageElement)
+        }
+
+        function createMessageElement({ username, message }) {
+          const messageElement = document.createElement('li')
+
+          messageElement.innerHTML = `${username} ${message}`
+
+          return messageElement
+        }
+      })();
+    </script>
+  </body>
+</html>
